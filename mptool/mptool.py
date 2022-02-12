@@ -31,11 +31,13 @@ from typing import Type
 from typing import Union
 
 import msgpack
+from epprint import epprint
 from printtool import output
 
 
+# verbose can be math.inf
 def unmp(*,
-         verbose: Union[bool, int, float],  # verbose can be math.inf
+         verbose: Union[bool, int, float],
          valid_types: Optional[Union[list, tuple]] = None,
          buffer_size: int = 1024,
          skip: Optional[int] = None,
@@ -52,7 +54,7 @@ def unmp(*,
     found_type: Type = type(None)
     for chunk in iter(lambda: sys.stdin.buffer.read(buffer_size), b""):
         if verbose == inf:
-            print(f"{valid_types=}", f"{buffer_size=}", f"{type(chunk)=}," f"{len(chunk)=}", f"{chunk=}", file=sys.stderr)
+            epprint(f"{valid_types=}", f"{buffer_size=}", f"{type(chunk)=}," f"{len(chunk)=}", f"{chunk=}")
         unpacker.feed(chunk)
         for value in unpacker:
             if single_type:
@@ -63,7 +65,7 @@ def unmp(*,
                         raise TypeError(f'{value=} does not match {found_type=}')
             index += 1
             if verbose == inf:
-                print(f"{index=}", f"{value=}", file=sys.stderr)
+                epprint(f"{index=}", f"{value=}")
             if skip is not None:
                 if index <= skip:
                     continue
