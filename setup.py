@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
+from setuptools import find_packages
+from setuptools import setup
+
 import fastentrypoints
-from setuptools import find_packages, setup
+
 if not sys.version_info[0] == 3:
     sys.exit("Python 3 is required. Use: \'python3 setup.py install\'")
 
@@ -23,11 +27,6 @@ config = {
     "zip_safe": False,
     "platforms": "any",
     "install_requires": dependencies,
-    "entry_points": {
-        "console_scripts": [
-            "mptool=mptool.mptool:cli",
-        ],
-    },
 }
 
 setup(**config)
