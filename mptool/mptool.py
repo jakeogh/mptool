@@ -68,7 +68,11 @@ def output(arg,
         epprint(f"{tty=}", f"{type(arg)=}", f"{length=}", f"{arg=}")
 
     if tty:
-        print(repr(arg))
+        # TODO check if tty encoding is utf8
+        if isinstance(arg, str):
+            print(arg)
+        else:
+            print(repr(arg))
         return
 
     message = msgpack.packb(arg)
