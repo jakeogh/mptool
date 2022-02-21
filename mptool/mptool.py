@@ -7,6 +7,7 @@ import sys
 from math import inf
 from typing import Iterator
 from typing import Optional
+from typing import Any
 from typing import Type
 from typing import Union
 
@@ -53,12 +54,11 @@ def unmp(*,
                     raise TypeError(f'{type(value)} not in valid_types: {valid_types}')
             yield value
 
-
-def output(arg,
-           *,
-           tty: bool,
-           verbose: Union[bool, int, float],
-           ) -> None:
+def _output(*,
+            arg: Any,
+            tty: bool,
+            verbose: Union[bool, int, float],
+            ) -> None:
 
     if verbose == inf:
         try:
@@ -80,3 +80,20 @@ def output(arg,
         epprint(f"{repr(message)=}")
 
     sys.stdout.buffer.write(message)
+
+
+def output(arg,
+           *,
+           reason: Any,
+           dict_input: bool,
+           tty: bool,
+           verbose: Union[bool, int, float],
+           ) -> None:
+
+    if dict_input:
+        _arg = {reason: arg}
+    else:
+        _arg = arg
+    del arg
+
+    _output(arg=_arg, tty=tty, verbose=verbose)
