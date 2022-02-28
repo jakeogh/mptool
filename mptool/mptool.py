@@ -108,7 +108,7 @@ def output(
     tty: bool,
     verbose: Union[bool, int, float],
     stderr: bool = False,
-    flush: bool = False,
+    flush: bool = True,
 ) -> None:
 
     if dict_input:
