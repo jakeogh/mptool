@@ -5,9 +5,9 @@
 
 import sys
 from math import inf
+from typing import Any
 from typing import Iterator
 from typing import Optional
-from typing import Any
 from typing import Type
 from typing import Union
 
@@ -16,25 +16,33 @@ from epprint import epprint
 
 
 # verbose can be math.inf
-def unmp(*,
-         verbose: Union[bool, int, float],
-         valid_types: Optional[Union[list, tuple]] = None,
-         buffer_size: int = 1024,
-         skip: Optional[int] = None,
-         single_type: bool = True,
-         ) -> Iterator[object]:
+def unmp(
+    *,
+    verbose: Union[bool, int, float],
+    valid_types: Optional[Union[list, tuple]] = None,
+    buffer_size: int = 1024,
+    skip: Optional[int] = None,
+    single_type: bool = True,
+) -> Iterator[object]:
 
     unpacker = msgpack.Unpacker()
     index = 0
     if valid_types:
         for _type in valid_types:
             if not isinstance(_type, Type):
-                raise ValueError(f'valid_types was passed with a non-Type member {_type=}')
+                raise ValueError(
+                    f"valid_types was passed with a non-Type member {_type=}"
+                )
 
     found_type: Type = type(None)
     for chunk in iter(lambda: sys.stdin.buffer.read(buffer_size), b""):
         if verbose == inf:
-            epprint(f"{valid_types=}", f"{buffer_size=}", f"{type(chunk)=}," f"{len(chunk)=}", f"{chunk=}")
+            epprint(
+                f"{valid_types=}",
+                f"{buffer_size=}",
+                f"{type(chunk)=}," f"{len(chunk)=}",
+                f"{chunk=}",
+            )
         unpacker.feed(chunk)
         for value in unpacker:
             if single_type:
@@ -42,7 +50,7 @@ def unmp(*,
                     found_type = type(value)
                 else:
                     if not isinstance(value, found_type):
-                        raise TypeError(f'{value=} does not match {found_type=}')
+                        raise TypeError(f"{value=} does not match {found_type=}")
             index += 1
             if verbose == inf:
                 epprint(f"{index=}", f"{value=}")
@@ -51,14 +59,17 @@ def unmp(*,
                     continue
             if valid_types is not None:
                 if type(value) not in valid_types:
-                    raise TypeError(f'{type(value)} not in valid_types: {valid_types}')
+                    raise TypeError(f"{type(value)} not in valid_types: {valid_types}")
             yield value
 
-def _output(*,
-            arg: Any,
-            tty: bool,
-            verbose: Union[bool, int, float],
-            ) -> None:
+
+def _output(
+    *,
+    arg: Any,
+    tty: bool,
+    verbose: Union[bool, int, float],
+    stderr: bool = False,
+) -> None:
 
     if verbose == inf:
         try:
@@ -79,16 +90,22 @@ def _output(*,
     if verbose == inf:
         epprint(f"{repr(message)=}")
 
-    sys.stdout.buffer.write(message)
+    if stderr:
+        sys.stderr.buffer.write(message)
+        sys.stderr.buffer.flush()
+    else:
+        sys.stdout.buffer.write(message)
 
 
-def output(arg,
-           *,
-           reason: Any,
-           dict_input: bool,
-           tty: bool,
-           verbose: Union[bool, int, float],
-           ) -> None:
+def output(
+    arg,
+    *,
+    reason: Any,
+    dict_input: bool,
+    tty: bool,
+    verbose: Union[bool, int, float],
+    stderr: bool = False,
+) -> None:
 
     if dict_input:
         _arg = {reason: arg}
@@ -96,4 +113,4 @@ def output(arg,
         _arg = arg
     del arg
 
-    _output(arg=_arg, tty=tty, verbose=verbose)
+    _output(arg=_arg, tty=tty, stderr=stderr, verbose=verbose)
