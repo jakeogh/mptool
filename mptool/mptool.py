@@ -69,6 +69,7 @@ def _output(
     tty: bool,
     verbose: Union[bool, int, float],
     stderr: bool = False,
+    flush: bool = False,
 ) -> None:
 
     if verbose == inf:
@@ -95,6 +96,8 @@ def _output(
         sys.stderr.buffer.flush()
     else:
         sys.stdout.buffer.write(message)
+        if flush:
+            sys.stderr.buffer.flush()
 
 
 def output(
@@ -105,6 +108,7 @@ def output(
     tty: bool,
     verbose: Union[bool, int, float],
     stderr: bool = False,
+    flush: bool = False,
 ) -> None:
 
     if dict_input:
@@ -113,4 +117,4 @@ def output(
         _arg = arg
     del arg
 
-    _output(arg=_arg, tty=tty, stderr=stderr, verbose=verbose)
+    _output(arg=_arg, tty=tty, flush=flush, stderr=stderr, verbose=verbose)
