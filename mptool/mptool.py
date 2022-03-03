@@ -26,7 +26,7 @@ def unmp(
     strict_map_key: bool = True,  # that's the default
 ) -> Iterator[object]:
 
-    unpacker = msgpack.Unpacker(strict_map_key=strict_map_key)
+    unpacker = msgpack.Unpacker(strict_map_key=strict_map_key, use_list=False)
     index = 0
     if valid_types:
         for _type in valid_types:
