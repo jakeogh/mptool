@@ -23,7 +23,7 @@ def unmp(
     buffer_size: int = 1024,
     skip: Optional[int] = None,
     single_type: bool = True,
-    strict_map_key: bool = True,  # that's the default
+    strict_map_key: bool = False,  # True is the default
 ) -> Iterator[object]:
 
     unpacker = msgpack.Unpacker(strict_map_key=strict_map_key, use_list=False)
