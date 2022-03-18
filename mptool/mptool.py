@@ -4,9 +4,9 @@
 
 
 import sys
-from io import BufferedReader
 from math import inf
 from typing import Any
+from typing import BinaryIO
 from typing import Iterator
 from typing import Optional
 from typing import Type
@@ -25,7 +25,7 @@ def unmp(
     skip: Optional[int] = None,
     single_type: bool = True,
     strict_map_key: bool = False,  # True is the default
-    file_handle: BufferedReader = sys.stdin.buffer,
+    file_handle: BinaryIO = sys.stdin.buffer,
 ) -> Iterator[object]:
 
     unpacker = msgpack.Unpacker(strict_map_key=strict_map_key, use_list=False)
