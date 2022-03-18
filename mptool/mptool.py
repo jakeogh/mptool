@@ -4,6 +4,7 @@
 
 
 import sys
+from io import BufferedReader
 from math import inf
 from typing import Any
 from typing import Iterator
@@ -24,6 +25,7 @@ def unmp(
     skip: Optional[int] = None,
     single_type: bool = True,
     strict_map_key: bool = False,  # True is the default
+    file_handle: BufferedReader = sys.stdin.buffer,
 ) -> Iterator[object]:
 
     unpacker = msgpack.Unpacker(strict_map_key=strict_map_key, use_list=False)
@@ -36,7 +38,7 @@ def unmp(
                 )
 
     found_type: Type = type(None)
-    for chunk in iter(lambda: sys.stdin.buffer.read(buffer_size), b""):
+    for chunk in iter(lambda: file_handle.read(buffer_size), b""):
         if verbose == inf:
             epprint(
                 f"{valid_types=}",
