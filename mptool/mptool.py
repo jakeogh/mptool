@@ -126,7 +126,7 @@ def output(
     verbose: Union[bool, int, float],
     stderr: bool = False,
     flush: bool = True,
-    file_handle: BinaryIO = sys.stdin.buffer,
+    file_handle: BinaryIO = sys.stdout.buffer,
 ) -> None:
 
     if dict_input:
