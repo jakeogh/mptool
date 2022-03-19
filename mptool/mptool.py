@@ -86,9 +86,10 @@ def _output(
     if tty:
         # TODO check if tty encoding is utf8
         if isinstance(arg, str):
-            print(arg)
+            repr_arg = arg
         else:
-            print(repr(arg))
+            repr_arg = repr(arg)
+        file_handle.write(repr_arg.encode("utf8"))
         return
 
     message = msgpack.packb(arg)
