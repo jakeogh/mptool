@@ -81,7 +81,15 @@ def _output(
             length = len(arg)
         except TypeError:
             length = None
-        epprint(f"{tty=}", f"{type(arg)=}", f"{length=}", f"{arg=}")
+        epprint(
+            f"{tty=}",
+            f"{type(arg)=}",
+            f"{length=}",
+            f"{arg=}",
+            f"{file_handle=}",
+            f"{flush=}",
+            f"{stderr=}",
+        )
 
     if tty:
         # TODO check if tty encoding is utf8
