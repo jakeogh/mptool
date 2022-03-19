@@ -97,7 +97,7 @@ def _output(
             repr_arg = arg
         else:
             repr_arg = repr(arg)
-        file_handle.write(repr_arg.encode("utf8") + "\n")
+        file_handle.write(repr_arg.encode("utf8") + b"\n")
         return
 
     message = msgpack.packb(arg)
