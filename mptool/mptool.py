@@ -71,8 +71,9 @@ def _output(
     arg: Any,
     tty: bool,
     verbose: Union[bool, int, float],
-    stderr: bool = False,
-    flush: bool = False,
+    stderr: bool,
+    flush: bool,
+    file_handle: BinaryIO,
 ) -> None:
 
     if verbose == inf:
@@ -94,13 +95,17 @@ def _output(
     if verbose == inf:
         epprint(f"{repr(message)=}")
 
-    if stderr:
-        sys.stderr.buffer.write(message)
-        sys.stderr.buffer.flush()
-    else:
-        sys.stdout.buffer.write(message)
-        if flush:
-            sys.stderr.buffer.flush()
+    file_handle.write(message)
+    if flush:
+        file_handle.flush()
+
+    # if stderr:
+    #    sys.stderr.buffer.write(message)
+    #    sys.stderr.buffer.flush()
+    # else:
+    #    sys.stdout.buffer.write(message)
+    #    if flush:
+    #        sys.stderr.buffer.flush()
 
 
 def output(
@@ -112,6 +117,7 @@ def output(
     verbose: Union[bool, int, float],
     stderr: bool = False,
     flush: bool = True,
+    file_handle: BinaryIO = sys.stdin.buffer,
 ) -> None:
 
     if dict_input:
@@ -120,4 +126,11 @@ def output(
         _arg = arg
     del arg
 
-    _output(arg=_arg, tty=tty, flush=flush, stderr=stderr, verbose=verbose)
+    _output(
+        arg=_arg,
+        tty=tty,
+        flush=flush,
+        stderr=stderr,
+        verbose=verbose,
+        file_handle=file_handle,
+    )
