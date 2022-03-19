@@ -74,6 +74,7 @@ def _output(
     stderr: bool,
     flush: bool,
     file_handle: BinaryIO,
+    file_handle_encoding: Optional[str],
 ) -> None:
 
     if verbose == inf:
@@ -91,13 +92,21 @@ def _output(
             f"{stderr=}",
         )
 
+    assert file_handle_encoding in [None, "utf8"]
     if tty:
         # TODO check if tty encoding is utf8
         if isinstance(arg, str):
             repr_arg = arg
         else:
             repr_arg = repr(arg)
-        file_handle.write(repr_arg.encode("utf8") + b"\n")
+
+        result_arg = repr_arg + "\n"
+        if (
+            not file_handle_encoding
+        ):  # no encoding, convert to bytes from py native utf8 str
+            result_arg = result_arg.encode("utf8")
+
+        file_handle.write(result_arg)
         return
 
     message = msgpack.packb(arg)
@@ -127,6 +136,7 @@ def output(
     stderr: bool = False,
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,
+    file_handle_encoding: Optional[str] = None,
 ) -> None:
 
     if dict_input:
@@ -142,4 +152,5 @@ def output(
         stderr=stderr,
         verbose=verbose,
         file_handle=file_handle,
+        file_handle_encoding=file_handle_encoding,
     )
