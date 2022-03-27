@@ -145,6 +145,9 @@ def output(
         _arg = arg
     del arg
 
+    if stderr:
+        file_handle = sys.stderr.buffer
+
     _output(
         arg=_arg,
         tty=tty,
