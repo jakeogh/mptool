@@ -2,15 +2,14 @@
 # -*- coding: utf8 -*-
 # tab-width:4
 
+from __future__ import annotations
 
 import sys
+from collections.abc import Iterator
 from math import inf
 from typing import Any
 from typing import BinaryIO
-from typing import Iterator
-from typing import Optional
 from typing import Type
-from typing import Union
 
 import msgpack
 from epprint import epprint
@@ -19,10 +18,10 @@ from epprint import epprint
 # verbose can be math.inf
 def unmp(
     *,
-    verbose: Union[bool, int, float],
-    valid_types: Optional[Union[list, tuple]] = None,
+    verbose: bool | int | float,
+    valid_types: None | list | tuple = None,
     buffer_size: int = 1024,
-    skip: Optional[int] = None,
+    skip: None | int = None,
     single_type: bool = True,
     strict_map_key: bool = False,  # True is the default
     file_handle: BinaryIO = sys.stdin.buffer,
@@ -70,11 +69,11 @@ def _output(
     *,
     arg: Any,
     tty: bool,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     stderr: bool,
     flush: bool,
     file_handle: BinaryIO,
-    file_handle_encoding: Optional[str],
+    file_handle_encoding: None | str,
 ) -> None:
 
     if verbose == inf:
@@ -132,11 +131,11 @@ def output(
     reason: Any,
     dict_input: bool,
     tty: bool,
-    verbose: Union[bool, int, float],
+    verbose: bool | int | float,
     stderr: bool = False,
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,
-    file_handle_encoding: Optional[str] = None,
+    file_handle_encoding: None | str = None,
 ) -> None:
 
     if dict_input:
