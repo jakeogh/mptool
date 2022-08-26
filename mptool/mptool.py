@@ -5,12 +5,30 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Iterator
+from collections.abc import Sequence
 from math import inf
 from typing import Any
 from typing import BinaryIO
 
 import msgpack
 from epprint import epprint
+
+
+# todo: this assumes unmp(single_type=True)
+def mpd_enumerate(
+    *, iterator, verbose: bool | int | float
+) -> Iterator[tuple[int, object, None | int]]:
+    for index, _mpobj in enumerate(iterator):
+        if verbose:
+            epprint(index, _mpobj)
+        if index == 0:
+            first_type = type(_mpobj)
+            if first_type == dict:
+                key_count = len(list(_mpobj.keys()))
+            else:
+                key_count = None
+        yield index, _mpobj, key_count
 
 
 def _output(
