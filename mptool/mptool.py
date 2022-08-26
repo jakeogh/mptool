@@ -17,7 +17,7 @@ from epprint import epprint
 
 # todo: this assumes unmp(single_type=True)
 def mpd_enumerate(
-    *, iterator, verbose: bool | int | float
+    iterator, *, verbose: bool | int | float
 ) -> Iterator[tuple[int, object, None | int]]:
     for index, _mpobj in enumerate(iterator):
         if verbose:
