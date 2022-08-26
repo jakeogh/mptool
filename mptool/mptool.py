@@ -33,8 +33,8 @@ def mpd_enumerate(
                 if key_count > 1:
                     multi_key = True
 
-        # yield index, _mpobj, key_count
-        yield index, _mpobj, multi_key
+        yield index, _mpobj, key_count
+        # yield index, _mpobj, multi_key
 
 
 def _output(
