@@ -18,7 +18,7 @@ from epprint import epprint
 # todo: this assumes unmp(single_type=True)
 def mpd_enumerate(
     iterator, *, verbose: bool | int | float
-) -> Iterator[tuple[int, object, None | int]]:
+) -> Iterator[tuple[int, object, int]]:
     for index, _mpobj in enumerate(iterator):
         if verbose:
             epprint(index, _mpobj)
@@ -27,11 +27,11 @@ def mpd_enumerate(
             if first_type == dict:
                 key_count = len(list(_mpobj.keys()))
             else:
-                key_count = None
-            multi_key = False
-            if key_count:
-                if key_count > 1:
-                    multi_key = True
+                key_count = 0
+            # multi_key = False
+            # if key_count:
+            #    if key_count > 1:
+            #        multi_key = True
 
         yield index, _mpobj, key_count
         # yield index, _mpobj, multi_key
