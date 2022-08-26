@@ -80,6 +80,7 @@ def output(
     dict_output: bool,
     tty: bool,
     verbose: bool | int | float,
+    first_type=None,
     stderr: bool = False,
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,
