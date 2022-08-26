@@ -94,7 +94,7 @@ def _output(
 def output(
     arg,
     *,
-    reason: Any,
+    reason: Any,  # if this is a dict, use dict protocol
     dict_output: bool,
     tty: bool,
     verbose: bool | int | float,
