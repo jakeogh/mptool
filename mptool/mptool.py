@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import pprint
 import sys
 from collections.abc import Iterator
 from collections.abc import Sequence
@@ -109,7 +110,13 @@ def output(
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,
     file_handle_encoding: None | str = None,
+    pretty_print: bool = False,
 ) -> None:
+
+    if pretty_print:
+        assert tty
+        pp = pprint.PrettyPrinter(indent=4)
+        arg = pp.pformat(arg)
 
     if dict_output:
         _arg = {reason: arg}
