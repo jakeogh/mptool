@@ -114,9 +114,9 @@ def output(
 ) -> None:
 
     if pretty_print:
-        assert tty
-        pp = pprint.PrettyPrinter(indent=4)
-        arg = pp.pformat(arg)
+        if tty:
+            pp = pprint.PrettyPrinter(indent=4)
+            arg = pp.pformat(arg)
 
     if dict_output:
         _arg = {reason: arg}
