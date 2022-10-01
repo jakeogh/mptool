@@ -4,10 +4,10 @@
 
 from __future__ import annotations
 
+import pickle
 import pprint
 import sys
 from collections.abc import Iterator
-from collections.abc import Sequence
 from math import inf
 from typing import Any
 from typing import BinaryIO
@@ -81,7 +81,13 @@ def _output(
         file_handle.write(result_arg)
         return
 
-    message = msgpack.packb(arg)
+    try:
+        message = msgpack.packb(arg)
+    except TypeError as e:
+        if verbose:
+            epprint(e)
+        message = msgpack.packb(pickle.dumps(arg))
+
     if verbose == inf:
         epprint(f"{repr(message)=}")
 
