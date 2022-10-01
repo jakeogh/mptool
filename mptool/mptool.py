@@ -81,12 +81,14 @@ def _output(
         file_handle.write(result_arg)
         return
 
-    try:
-        message = msgpack.packb(arg)
-    except TypeError as e:
-        if verbose:
-            epprint(e)
-        message = msgpack.packb(pickle.dumps(arg))
+    message = msgpack.packb(arg)
+    # a picle is not a mp type, so it's just bytes, not that useful
+    # try:
+    #    message = msgpack.packb(arg)
+    # except TypeError as e:
+    #    if verbose:
+    #        epprint(e)
+    #    message = msgpack.packb(pickle.dumps(arg))
 
     if verbose == inf:
         epprint(f"{repr(message)=}")
