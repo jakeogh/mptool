@@ -111,7 +111,6 @@ def output(
     *,
     reason: Any,  # if this is a dict, use dict protocol
     dict_output: bool,
-    tty: bool,
     verbose: bool | int | float,
     first_type=None,
     stderr: bool = False,
@@ -119,6 +118,7 @@ def output(
     file_handle: BinaryIO = sys.stdout.buffer,
     file_handle_encoding: None | str = None,
     pretty_print: bool = False,
+    tty: bool | None = None,
 ) -> None:
 
     if pretty_print:
@@ -135,9 +135,14 @@ def output(
     if stderr:
         file_handle = sys.stderr.buffer
 
+    if not tty:
+        _tty = sys.stdout.isatty()
+    else:
+        _tty = tty
+
     _output(
         arg=_arg,
-        tty=tty,
+        tty=_tty,
         flush=flush,
         stderr=stderr,
         verbose=verbose,
