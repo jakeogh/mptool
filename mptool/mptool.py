@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-import pickle
+# import pickle
 import pprint
 import sys
 from collections.abc import Iterator
@@ -79,6 +79,8 @@ def _output(
             result_arg = result_arg.encode("utf8")
 
         file_handle.write(result_arg)
+        if flush:
+            file_handle.flush()
         return
 
     message = msgpack.packb(arg)
