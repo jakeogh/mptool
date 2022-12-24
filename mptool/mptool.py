@@ -18,7 +18,9 @@ from epprint import epprint
 
 # todo: this assumes unmp(single_type=True)
 def mpd_enumerate(
-    iterator, *, verbose: bool | int | float
+    iterator,
+    *,
+    verbose: bool | int | float = False,
 ) -> Iterator[tuple[int, object, int]]:
     for index, _mpobj in enumerate(iterator):
         if verbose:
@@ -42,11 +44,11 @@ def _output(
     *,
     arg: Any,
     tty: bool,
-    verbose: bool | int | float,
     stderr: bool,
     flush: bool,
     file_handle: BinaryIO,
     file_handle_encoding: None | str,
+    verbose: bool | int | float = False,
 ) -> None:
 
     if verbose == inf:
@@ -113,7 +115,6 @@ def output(
     *,
     reason: Any,  # if this is a dict, use dict protocol
     dict_output: bool,
-    verbose: bool | int | float,
     first_type=None,
     stderr: bool = False,
     flush: bool = True,
@@ -121,6 +122,7 @@ def output(
     file_handle_encoding: None | str = None,
     pretty_print: bool = False,
     tty: bool | None = None,
+    verbose: bool | int | float = False,
 ) -> None:
 
     if pretty_print:
