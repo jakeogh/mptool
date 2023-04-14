@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-# import pickle
 import pprint
 import sys
 from collections.abc import Iterator
@@ -50,7 +49,6 @@ def _output(
     file_handle_encoding: None | str,
     verbose: bool | int | float = False,
 ) -> None:
-
     if verbose == inf:
         try:
             length = len(arg)
@@ -124,7 +122,6 @@ def output(
     tty: bool | None = None,
     verbose: bool | int | float = False,
 ) -> None:
-
     if pretty_print:
         if tty:
             pp = pprint.PrettyPrinter(indent=4)
