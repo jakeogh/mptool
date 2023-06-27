@@ -7,12 +7,12 @@ from __future__ import annotations
 import pprint
 import sys
 from collections.abc import Iterator
-from math import inf
 from typing import Any
 from typing import BinaryIO
 
 import msgpack
 from epprint import epprint
+from globalverbose import gvd
 
 
 # todo: this assumes unmp(single_type=True)
@@ -43,13 +43,12 @@ def _output(
     *,
     arg: Any,
     tty: bool,
-    stderr: bool,
     flush: bool,
     file_handle: BinaryIO,
     file_handle_encoding: None | str,
     verbose: bool | int | float = False,
 ) -> None:
-    if verbose == inf:
+    if gvd:
         try:
             length = len(arg)
         except TypeError:
@@ -61,7 +60,6 @@ def _output(
             f"{arg=}",
             f"{file_handle=}",
             f"{flush=}",
-            f"{stderr=}",
         )
 
     assert file_handle_encoding in [None, "utf8"]
@@ -92,7 +90,7 @@ def _output(
     #        epprint(e)
     #    message = msgpack.packb(pickle.dumps(arg))
 
-    if verbose == inf:
+    if gvd:
         epprint(f"{repr(message)=}")
 
     file_handle.write(message)
@@ -145,7 +143,6 @@ def output(
         arg=_arg,
         tty=_tty,
         flush=flush,
-        stderr=stderr,
         verbose=verbose,
         file_handle=file_handle,
         file_handle_encoding=file_handle_encoding,
