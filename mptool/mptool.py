@@ -19,7 +19,7 @@ from globalverbose import gvd
 def mpd_enumerate(
     iterator,
     *,
-    verbose: bool | int | float = False,
+    verbose: bool = False,
 ) -> Iterator[tuple[int, object, int]]:
     for index, _mpobj in enumerate(iterator):
         if verbose:
@@ -46,11 +46,11 @@ def _output(
     flush: bool,
     file_handle: BinaryIO,
     file_handle_encoding: None | str,
-    verbose: bool | int | float = False,
+    verbose: bool = False,
 ) -> None:
     if gvd:
         try:
-            length = len(arg)
+            length = len(repr(arg))
         except TypeError:
             length = None
         epprint(
@@ -118,7 +118,7 @@ def output(
     file_handle_encoding: None | str = None,
     pretty_print: bool = False,
     tty: bool | None = None,
-    verbose: bool | int | float = False,
+    verbose: bool = False,
 ) -> None:
     if pretty_print:
         if tty:
