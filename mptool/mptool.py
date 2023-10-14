@@ -50,13 +50,18 @@ def _output(
 ) -> None:
     if gvd:
         try:
-            length = len(repr(arg))
+            length = len(arg)
         except TypeError:
             length = None
+        try:
+            repr_length = len(repr(arg))
+        except TypeError:
+            repr_length = None
         epprint(
             f"{tty=}",
             f"{type(arg)=}",
             f"{length=}",
+            f"{repr_length=}",
             f"{arg=}",
             f"{file_handle=}",
             f"{flush=}",
