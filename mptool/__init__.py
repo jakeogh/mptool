@@ -1,2 +1,6 @@
+"""
+isort:skip_file
+"""
+
 from .mptool import mpd_enumerate
-from .mptool import output
+from .mptool import output as output
