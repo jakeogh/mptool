@@ -14,6 +14,8 @@ import msgpack
 from epprint import epprint
 from globalverbose import gvd
 
+epprint(gvd)
+
 
 # todo: this assumes unmp(single_type=True)
 def mpd_enumerate(
