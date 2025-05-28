@@ -21,6 +21,7 @@ def mpd_enumerate(
     *,
     verbose: bool = False,
 ) -> Iterator[tuple[int, object, int]]:
+    key_count = 0
     for index, _mpobj in enumerate(iterator):
         if verbose:
             epprint(index, _mpobj)
@@ -87,13 +88,6 @@ def _output(
         return
 
     message = msgpack.packb(arg)
-    # a picle is not a mp type, so it's just bytes, not that useful
-    # try:
-    #    message = msgpack.packb(arg)
-    # except TypeError as e:
-    #    if verbose:
-    #        epprint(e)
-    #    message = msgpack.packb(pickle.dumps(arg))
 
     if gvd:
         epprint(f"{repr(message)=}")
