@@ -51,6 +51,7 @@ def _output(
     file_handle_encoding: None | str,
     verbose: bool = False,
 ) -> None:
+    epprint(gvd)
     if gvd:
         try:
             length = len(arg)
