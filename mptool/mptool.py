@@ -96,14 +96,6 @@ def _output(
     if flush:
         file_handle.flush()
 
-    # if stderr:
-    #    sys.stderr.buffer.write(message)
-    #    sys.stderr.buffer.flush()
-    # else:
-    #    sys.stdout.buffer.write(message)
-    #    if flush:
-    #        sys.stderr.buffer.flush()
-
 
 def output(
     arg,
