@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mptool"
-version = "0.1"
+version = "0.0.1760866494"
 description = "messagepack functions for typed CLI IPC"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
