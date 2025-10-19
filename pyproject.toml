@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mptool"
-version = "0.0.1760866494"
+version = "0.0.1760910002"
 description = "messagepack functions for typed CLI IPC"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
@@ -15,10 +15,8 @@ dependencies = [
     "epprint @ git+https://git@github.com/jakeogh/epprint",
     "msgpack",
 ]
+license = "ISC"
 requires-python = ">=3.11"
-
-[project.license]
-text = "ISC"
 
 [project.urls]
 Homepage = "https://github.com/jakeogh/mptool"
