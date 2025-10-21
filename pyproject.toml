@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "mptool"
-version = "0.0.1761032166"
+version = "0.0.1761032167"
 description = "messagepack functions for typed CLI IPC"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
