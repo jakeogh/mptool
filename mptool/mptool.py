@@ -100,8 +100,8 @@ def output(
     arg,
     *,
     reason: Any,  # if this is a dict, use dict protocol
-    dict_output: bool,
     first_type=None,
+    dict_output: bool = False,
     stderr: bool = False,
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,

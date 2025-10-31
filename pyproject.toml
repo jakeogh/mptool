@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "mptool"
-version = "0.0.1761032167"
+version = "1!0.0.1761897651"
 description = "messagepack functions for typed CLI IPC"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
@@ -28,6 +28,6 @@ mptool = [
 ]
 
 [tool.pep508-url-version-backend]
-dependencies-indexed = []
+dependencies-indexed = ["epprint>=1!0.0.1761259484", "msgpack"]
 dependencies-git = ["epprint @ git+https://git@github.com/jakeogh/epprint", "msgpack"]
 index-urls = ["jakeogh.github.io", "pip-index"]
