@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf8 -*-
-# tab-width:4
-
-from __future__ import annotations
 
 import pprint
 import sys
@@ -11,11 +7,11 @@ from typing import Any
 from typing import BinaryIO
 
 import msgpack
-from epprint import epprint
+from eprint import eprint
 from globalverbose import gvd
 
 
-# todo: this assumes unmp(single_type=True)
+# assumes unmp(single_type=True)
 def mpd_enumerate(
     iterator,
     *,
@@ -24,18 +20,12 @@ def mpd_enumerate(
     key_count = 0
     for index, _mpobj in enumerate(iterator):
         if verbose:
-            epprint(index, _mpobj)
+            eprint(index, _mpobj)
         if index == 0:
-            first_type = type(_mpobj)
-            if first_type == dict:
-                key_count = len(list(_mpobj.keys()))
+            if isinstance(_mpobj, dict):
+                key_count = len(_mpobj)
             else:
                 key_count = 0
-            # multi_key = False
-            # if key_count:
-            #    if key_count > 1:
-            #        multi_key = True
-
         yield index, _mpobj, key_count
 
 
@@ -57,7 +47,7 @@ def _output(
             repr_length = len(repr(arg))
         except TypeError:
             repr_length = None
-        epprint(
+        eprint(
             f"{tty=}",
             f"{type(arg)=}",
             f"{length=}",
@@ -67,18 +57,15 @@ def _output(
             f"{flush=}",
         )
 
-    assert file_handle_encoding in [None, "utf8"]
+    assert file_handle_encoding in {None, "utf8"}
     if tty:
-        # TODO check if tty encoding is utf8
         if isinstance(arg, str):
             repr_arg = arg
         else:
             repr_arg = repr(arg)
 
         result_arg = repr_arg + "\n"
-        if (
-            not file_handle_encoding
-        ):  # no encoding, convert to bytes from py native utf8 str
+        if not file_handle_encoding:
             result_arg = result_arg.encode("utf8")
 
         file_handle.write(result_arg)
@@ -89,7 +76,7 @@ def _output(
     message = msgpack.packb(arg)
 
     if gvd:
-        epprint(f"{repr(message)=}")
+        eprint(f"{repr(message)=}")
 
     file_handle.write(message)
     if flush:
@@ -99,39 +86,31 @@ def _output(
 def output(
     arg,
     *,
-    reason: Any,  # if this is a dict, use dict protocol
-    first_type=None,
+    reason: Any,  # if dict_output, becomes the dict key
     dict_output: bool = False,
     stderr: bool = False,
     flush: bool = True,
     file_handle: BinaryIO = sys.stdout.buffer,
     file_handle_encoding: None | str = None,
     pretty_print: bool = False,
-    tty: bool | None = None,
+    tty: None | bool = None,
     verbose: bool = False,
 ) -> None:
-    if pretty_print:
-        if tty:
-            pp = pprint.PrettyPrinter(indent=4)
-            arg = pp.pformat(arg)
+    if tty is None:
+        tty = sys.stdout.isatty()
+
+    if pretty_print and tty:
+        arg = pprint.PrettyPrinter(indent=4).pformat(arg)
 
     if dict_output:
-        _arg = {reason: arg}
-    else:
-        _arg = arg
-    del arg
+        arg = {reason: arg}
 
     if stderr:
         file_handle = sys.stderr.buffer
 
-    if not tty:
-        _tty = sys.stdout.isatty()
-    else:
-        _tty = tty
-
     _output(
-        arg=_arg,
-        tty=_tty,
+        arg=arg,
+        tty=tty,
         flush=flush,
         verbose=verbose,
         file_handle=file_handle,
